@@ -4,12 +4,12 @@ on:
       - staging-branch
       - production-branch
 
-name: 🚀 Deploy website on testing-stage or production-stage
+name: 🚀 Deploy website on staging or production
 
 jobs:
   web-deploy-testing:
     name: 🎉 Deploy to Testing Stage
-    if: github.ref == 'refs/heads/testing-stage'
+    if: github.ref == 'refs/heads/testing-branch'
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
