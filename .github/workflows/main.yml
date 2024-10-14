@@ -7,8 +7,8 @@ on:
 name: 🚀 Deploy website on staging or production
 
 jobs:
-  web-deploy-testing:
-    name: 🎉 Deploy to Testing Stage
+  web-deploy-staging:
+    name: 🎉 Deploy to Staging Stage
     if: github.ref == 'refs/heads/staging-branch'  # Correct branch name
     runs-on: ubuntu-latest
     environment: staging
@@ -16,13 +16,13 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
     
-    - name: 📂 Sync files to Testing Stage
+    - name: 📂 Sync files to Staging Stage
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: testing-stage/
+        server-dir: staging-stage/
         dry-run: false
 
   web-deploy-production:
