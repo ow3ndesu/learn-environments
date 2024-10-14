@@ -1,8 +1,8 @@
 on:
   push:
     branches:
-      - testing-stage
-      - production-stage
+      - staging-branch
+      - production-branch
 
 name: 🚀 Deploy website on testing-stage or production-stage
 
@@ -27,7 +27,7 @@ jobs:
   web-deploy-production:
     name: 🎉 Deploy to Production Stage
     needs: web-deploy-testing
-    if: github.ref == 'refs/heads/production-stage'
+    if: github.ref == 'refs/heads/production-branch'
     runs-on: ubuntu-latest
     environment: production
     steps:
