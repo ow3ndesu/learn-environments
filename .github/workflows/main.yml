@@ -25,6 +25,19 @@ jobs:
         server-dir: testing-stage/
         dry-run: false
 
+    - name: 📧 Send email notification to testers
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: ${{ secrets.SMTP_SERVER }}    # e.g., smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.SMTP_USERNAME }}        # Your email address
+        password: ${{ secrets.SMTP_PASSWORD }}        # App-specific password or SMTP password
+        subject: "New Features Ready for Testing"
+        to: "enguerra1111@gmail.com"                    # Testers' emails (comma-separated)
+        from: ${{ secrets.SMTP_USERNAME }}
+        body: "New features have been deployed to the testing stage. Please review and provide your feedback."
+        secure: true
+
   web-deploy-production:
     name: 🎉 Deploy to Production Stage
     if: github.ref == 'refs/heads/production-branch'  # Correct branch name
