@@ -11,6 +11,7 @@ jobs:
     name: 🎉 Deploy to Testing Stage
     if: github.ref == 'refs/heads/staging-branch'  # Correct branch name
     runs-on: ubuntu-latest
+    environment: staging
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
