@@ -1,0 +1,44 @@
+on:
+  push:
+    branches:
+      - testing-stage
+      - production-stage
+
+name: 🚀 Deploy website on testing-stage or production-stage
+
+jobs:
+  web-deploy-testing:
+    name: 🎉 Deploy to Testing Stage
+    if: github.ref == 'refs/heads/testing-stage'
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+    
+    - name: 📂 Sync files to Testing Stage
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: testing-stage/
+        dry-run: false
+
+  web-deploy-production:
+    name: 🎉 Deploy to Production Stage
+    needs: web-deploy-testing
+    if: github.ref == 'refs/heads/production-stage'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+    
+    - name: 📂 Sync files to Production Stage
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: production-stage/
+        dry-run: false
